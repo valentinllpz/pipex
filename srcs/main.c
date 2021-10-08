@@ -6,7 +6,7 @@
 /*   By: vlugand- <vlugand-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/06 15:36:27 by vlugand-          #+#    #+#             */
-/*   Updated: 2021/10/07 17:32:51 by vlugand-         ###   ########.fr       */
+/*   Updated: 2021/10/08 18:48:12 by vlugand-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	read_from_pipe(int *fd, char **argv, char **envp)
 {
 	int		file;
 
-	file = open(argv[4], O_CREAT | O_WRONLY | O_TRUNC, S_IRWXU);
+	file = open(argv[4], O_CREAT | O_WRONLY | O_TRUNC, S_IRWXU); //flag pas ouf pour la crea
 	if (file == -1)
 		error();
 	dup2(file, STDOUT_FILENO);
