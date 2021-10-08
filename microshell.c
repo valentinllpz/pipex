@@ -6,7 +6,7 @@
 /*   By: vlugand- <vlugand-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 21:45:39 by vlugand-          #+#    #+#             */
-/*   Updated: 2021/10/08 18:42:17 by vlugand-         ###   ########.fr       */
+/*   Updated: 2021/10/08 18:48:47 by vlugand-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ void	handle_pipe(t_cmd *cmd, char **envp, int next_pipe)
 		close(cmd->fd_before[1]);
 		dup2(cmd->fd_before[0], STDIN_FILENO);
 		close(cmd->fd_before[0]);
+		
 	}
 	
 }
