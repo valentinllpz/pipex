@@ -6,7 +6,7 @@
 /*   By: vlugand- <vlugand-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 21:45:39 by vlugand-          #+#    #+#             */
-/*   Updated: 2021/10/08 18:48:47 by vlugand-         ###   ########.fr       */
+/*   Updated: 2021/10/11 13:34:07 by vlugand-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,30 @@ int		execution(t_cmd *cmd, char **envp)
 	return (ret);
 }
 
+
+void	write_to_pipe(t_cmd *cmd)
+{
+	if (!cmd->pipe_before)
+	{
+		close(cmd->fd_before[0]);
+		dup2(cmd->fd_before[1], STDOUT_FILENO);
+		close(cmd->fd_before[1]);
+		cmd->pipe_before = 1;
+	}
+	else if (cmd->pipe_before)
+	{
+		close(cmd->fd_before[1]);
+		dup2(cmd->fd_before[0], STDIN_FILENO);
+		close(cmd->fd_before[0]);
+	}
+	return ;
+}
+
+void	read_from_pipe(t_cmd *cmd)
+{
+	return ;
+}
+
 void	handle_pipe(t_cmd *cmd, char **envp, int next_pipe)
 {	
 	pid_t		pid;
@@ -97,19 +121,9 @@ void	handle_pipe(t_cmd *cmd, char **envp, int next_pipe)
 			fatal_error();
 	if ((pid = fork()) == -1)
 		fatal_error();
-	if (pid == 0 && !cmd->pipe_before)
-	{
-		close(cmd->fd_before[0]);
-		dup2(cmd->fd_before[1], STDOUT_FILENO);
-		close(cmd->fd_before[1]);
-	}
-	else if (pid == 0 && cmd->pipe_before)
-	{
-		close(cmd->fd_before[1]);
-		dup2(cmd->fd_before[0], STDIN_FILENO);
-		close(cmd->fd_before[0]);
-		
-	}
+	if (pid == 0)
+		write_to_pipe;
+
 	
 }
 
